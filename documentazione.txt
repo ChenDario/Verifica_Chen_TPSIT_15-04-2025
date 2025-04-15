@@ -1,0 +1,59 @@
+RICHIESTA: 
+    SCUOLA: 
+    curl http://localhost:8080/scuole
+    GET /scuole  ScuoleController:index
+    Risposta: 
+    STATUS CODE: 200
+    [{"id":"1","nome":"ITIS Meucci","indirizzo":"Via del Filarete, 17"},{"id":"2","nome":"Leonardo da Vinci","indirizzo":"Via Garibaldi, 10"}]
+
+    curl http://localhost:8080/scuole/1
+    GET /scuole/{id_scuola} ScuoleController:show
+    STATUS CODE: 200
+    [{"id":1,"nome":"ITIS Meucci","indirizzo":"Via del Filarete, 17"}]
+
+    curl -X POST http://localhost:8080/scuole -H "Content-Type: application/json" -d '{"nome": "nome_scuola","indirizzo": "indirizzo_scuola"}'
+    POST /scuole ScuoleControlelr:create 
+    Formato da inviare json: {"nome": "nome_scuola","indirizzo": "indirizzo_scuola"}
+    STATUS CODE: 201
+    {"status":"success","message":"Scuola creato con successo","id":4}
+
+    curl -X PUT http://localhost:8080/scuole/4 -H "Content-Type: application/json" -d '{"nome": "Ruji", "indirizzo":"ciao"}'
+    PUT /scuole/{id_scuola} ScuoleControlelr:update 
+    Formato da inviare json: {"nome": "nome_scuola","indirizzo": "indirizzo_scuola"}
+    STATUS CODE: 201
+    {"status":"success","message":"Scuola Aggiornato con successo","id":0}
+
+    curl -X DELETE http://localhost:8080/scuole/3
+    DELETE /scuole/{id_scuola} ScuoleController:destroy
+    STATUS CODE: 201
+    {"status":"success","message":"Scuola Eliminato con successo"}
+
+
+    DOCENTI: 
+    curl http://localhost:8080/scuole/1/docenti
+    GET /scuole  DocentiController:index
+    Risposta: 
+    STATUS CODE: 200
+    [{"id":"1","nome":"Claudio","cognome":"Benvenuti","scuola_id":"1"},{"id":"2","nome":"Ivan","cognome":"Bruno","scuola_id":"1"}]
+
+    curl http://localhost:8080/scuole/1/docenti/2
+    GET /scuole/{id_scuola}/docenti/{id_docente} DocentiController:show
+    STATUS CODE: 200
+    [{"id":2,"nome":"Ivan","cognome":"Bruno","scuola_id":1}]
+
+    curl -X POST http://localhost:8080/scuole/2/docenti -H "Content-Type: application/json" -d '{"nome": "nome","cognome": "cognome"}'
+    POST /scuole/{id_scuola}/docenti DocentiController:create 
+    Formato da inviare json: {"nome": "nome","cognome": "cognome"}
+    STATUS CODE: 201
+    {"status":"success","message":"Docente creato con successo","id":4}
+
+    curl -X PUT http://localhost:8080/scuole/2/docenti/4 -H "Content-Type: application/json" -d '{"nome": "Ruji", "cognome":"Chen"}'
+    PUT /scuole/{id_scuola}/docenti/{id_docente} DocentiController:update 
+    Formato da inviare json: {"nome": "nome","cognome": "cognome"}
+    STATUS CODE: 201
+    {"status":"success","message":"Docente Aggiornato con successo"}
+
+    curl -X DELETE http://localhost:8080/scuole/2/docenti/4
+    DELETE /scuole/{id_scuola}/docenti/{id_docente} DocentiController:destroy
+    STATUS CODE: 201
+    {"status":"success","message":"Docente Eliminato con successo"}
