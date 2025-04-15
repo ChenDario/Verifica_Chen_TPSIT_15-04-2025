@@ -10,23 +10,40 @@ RICHIESTA:
     GET /scuole/{id_scuola} ScuoleController:show
     STATUS CODE: 200
     [{"id":1,"nome":"ITIS Meucci","indirizzo":"Via del Filarete, 17"}]
+    STATUS CODE: 404
+    {"status":"failed","message":"Scuola non trovata"}
+
+    curl http://localhost:8080/scuole?nome=meucci&sort=true&sort_per=id&sort_dir=DESC
+    GET /scuole?nome=meucci&sort={true/false}&sort_per={colonna}&sort_dir={ASC/DESC}
+    STATUS CODE: 200
+    [{"id":1,"nome":"ITIS Meucci","indirizzo":"Via del Filarete, 17"}]
+    STATUS CODE: 404
+    {"status":"failed","message":"Scuola non trovata"}
 
     curl -X POST http://localhost:8080/scuole -H "Content-Type: application/json" -d '{"nome": "nome_scuola","indirizzo": "indirizzo_scuola"}'
     POST /scuole ScuoleControlelr:create 
     Formato da inviare json: {"nome": "nome_scuola","indirizzo": "indirizzo_scuola"}
     STATUS CODE: 201
     {"status":"success","message":"Scuola creato con successo","id":4}
+    STATUS CODE: 400
+    {"status":"failed","message":"Dati scuola errati/incompleti"} 
+    STATUS CODE: 500
+    {"status":"failed","message":"Internal Server Error (input)"}
 
     curl -X PUT http://localhost:8080/scuole/4 -H "Content-Type: application/json" -d '{"nome": "Ruji", "indirizzo":"ciao"}'
     PUT /scuole/{id_scuola} ScuoleControlelr:update 
     Formato da inviare json: {"nome": "nome_scuola","indirizzo": "indirizzo_scuola"}
     STATUS CODE: 201
     {"status":"success","message":"Scuola Aggiornato con successo","id":0}
+    STATUS CODE: 400
+    {"status":"failed","message":"Dati incompleti/errati}
 
     curl -X DELETE http://localhost:8080/scuole/3
     DELETE /scuole/{id_scuola} ScuoleController:destroy
     STATUS CODE: 201
     {"status":"success","message":"Scuola Eliminato con successo"}
+    STATUS CODE: 400
+    {"status":"failed","message":"Error in the delete"}
 
 
     DOCENTI: 
@@ -40,20 +57,37 @@ RICHIESTA:
     GET /scuole/{id_scuola}/docenti/{id_docente} DocentiController:show
     STATUS CODE: 200
     [{"id":2,"nome":"Ivan","cognome":"Bruno","scuola_id":1}]
+    STATUS CODE: 404
+    {"status":"failed","message":"Docente non trovato"}
+
+    curl http://localhost:8080/scuole/1/docenti?nome=claudio&cognome=benve&sort=true&sort_per=id&sort_dir=DESC
+    GET /scuole/{id_scuola}/docenti?nome=nomeDocente&cognome=cognomeDocente&sort={true/false}&sort_per={colonna}&sort_dir={ASC/DESC}
+    STATUS CODE: 200
+    [{"id":"1","nome":"Claudio","cognome":"Benvenuti","scuola_id":"1"}]
+    STATUS CODE: 404
+    {"status":"failed","message":"Docente non trovato"}
 
     curl -X POST http://localhost:8080/scuole/2/docenti -H "Content-Type: application/json" -d '{"nome": "nome","cognome": "cognome"}'
     POST /scuole/{id_scuola}/docenti DocentiController:create 
     Formato da inviare json: {"nome": "nome","cognome": "cognome"}
     STATUS CODE: 201
     {"status":"success","message":"Docente creato con successo","id":4}
+    STATUS CODE: 400
+    {"status":"failed","message":"Dati scuola errati/incompleti"} 
+    STATUS CODE: 500
+    {"status":"failed","message":"Internal Server Error (input)"}
 
     curl -X PUT http://localhost:8080/scuole/2/docenti/4 -H "Content-Type: application/json" -d '{"nome": "Ruji", "cognome":"Chen"}'
     PUT /scuole/{id_scuola}/docenti/{id_docente} DocentiController:update 
     Formato da inviare json: {"nome": "nome","cognome": "cognome"}
     STATUS CODE: 201
     {"status":"success","message":"Docente Aggiornato con successo"}
+    STATUS CODE 400
+    {"status":"failed","message":"Docente Fallito ad aggiornare"}
 
     curl -X DELETE http://localhost:8080/scuole/2/docenti/4
     DELETE /scuole/{id_scuola}/docenti/{id_docente} DocentiController:destroy
     STATUS CODE: 201
     {"status":"success","message":"Docente Eliminato con successo"}
+    STATUS CODE: 400
+    {"status":"failed","message":"Errore durante il delete"}

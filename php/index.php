@@ -8,10 +8,12 @@ require __DIR__ . '/controllers/ScuoleController.php';
 $app = AppFactory::create();
 //Scuole
 //curl http://localhost:8080/scuole
-$app->get('/scuole', "ScuoleController:index");
+$app->get('/scuole', "ScuoleController:show");
 //curl http://localhost:8080/scuole/1
 $app->get('/scuole/{id_scuola}', "ScuoleController:show");
-//curl -X POST http://localhost:8080/scuole -H "Content-Type: application/json" -d '{"nome": "Scuola Superiore Agnoletti","indirizzo": "via delle corti 100"}'
+//curl http://localhost:8080/scuole?nome=meucci&sort=true&sort_per=id&sort_dir=DESC
+//$app->get('/scuole', "ScuoleController:search");
+//curl -X POST http://localhost:8080/scuole -H "Content-Type: application/json" -d '{"nome": "Scuola Superiore Verga","indirizzo": "Via barbarinese 56"}'
 $app->post('/scuole', "ScuoleController:create");
 //curl -X PUT http://localhost:8080/scuole/3 -H "Content-Type: application/json" -d '{"nome": "Ruji"}'
 $app->put('/scuole/{id_scuola}', "ScuoleController:update");
